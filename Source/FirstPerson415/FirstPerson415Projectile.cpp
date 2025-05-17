@@ -2,9 +2,12 @@
 
 #include "FirstPerson415Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Components/SphereComponent.h"
+#include "Components/DecalComponent.h"
+#include "Kismet/GameplayStatics.h"
 
-AFirstPerson415Projectile::AFirstPerson415Projectile() 
+AFirstPerson415Projectile::AFirstPerson415Projectile()
 {
 	// Use a sphere as a simple collision representation
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
@@ -16,8 +19,12 @@ AFirstPerson415Projectile::AFirstPerson415Projectile()
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
 	CollisionComp->CanCharacterStepUpOn = ECB_No;
 
+	ballMesh = CreateDefaultSubobject<UStaticMeshComponent>("Ball Mesh");
+
 	// Set as root component
 	RootComponent = CollisionComp;
+
+	ballMesh->SetupAttachment(CollisionComp);
 
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
@@ -39,5 +46,21 @@ void AFirstPerson415Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
 
 		Destroy();
+	}
+
+	if (OtherActor != nullptr)
+	{
+		float ranNUmX = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+		float ranNUmY = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+		float ranNUmZ = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+		float frameNum = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
+
+		FVector4 randColor = FVector4(ranNUmX, ranNUmY, ranNUmZ, 1.f);
+
+		auto Decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), baseMat, FVector(UKismetMathLibrary::RandomFloatInRange(20.f, 40.f)), Hit.Location, Hit.Normal.Rotation(), 0.f);
+		auto MatInstance = Decal->CreateDynamicMaterialInstance();
+
+		MatInstance->SetVectorParameterValue("Color", randColor);
+		MatInstance->SetScalarParameterValue("Frame", frameNum);
 	}
 }

@@ -22,6 +22,12 @@ class AFirstPerson415Projectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* ballMesh;
+
+	UPROPERTY(EditAnywhere)
+		UMaterial* baseMat;
+
 public:
 	AFirstPerson415Projectile();
 
