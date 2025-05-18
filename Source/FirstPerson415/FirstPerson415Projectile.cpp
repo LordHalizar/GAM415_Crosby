@@ -19,11 +19,13 @@ AFirstPerson415Projectile::AFirstPerson415Projectile()
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
 	CollisionComp->CanCharacterStepUpOn = ECB_No;
 
+	// Creation of default subobject for "ballMesh"
 	ballMesh = CreateDefaultSubobject<UStaticMeshComponent>("Ball Mesh");
 
 	// Set as root component
 	RootComponent = CollisionComp;
 
+	// Setup for ballMesh attachment to the collision component
 	ballMesh->SetupAttachment(CollisionComp);
 
 	// Use a ProjectileMovementComponent to govern this projectile's movement
@@ -41,11 +43,16 @@ AFirstPerson415Projectile::AFirstPerson415Projectile()
 void AFirstPerson415Projectile::BeginPlay()
 {
 	Super::BeginPlay();
+	// Determines color parameter variables using randomized numbers generated within a range and then sets them equal to randColor variable
 	randColor = FLinearColor(UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), 1.f);
 
+	// Creates dynamic material instance using projMat and stores value in dmiMat variable
 	dmiMat = UMaterialInstanceDynamic::Create(projMat, this);
+
+	// Sets ballMesh material to created dynamic material instance stored in dmiMat
 	ballMesh->SetMaterial(0, dmiMat);
 
+	// Sets vector parameter value for projectile color from dmiMat using the randColor variable and applying this to ProjColor material blueprint parameter
 	dmiMat->SetVectorParameterValue("ProjColor", randColor);
 }
 
@@ -59,13 +66,19 @@ void AFirstPerson415Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 		Destroy();
 	}
 
+	// If projectile hits something (aka not nothing), projectile collision will apply splatter effect with randomized color to impacted surface
 	if (OtherActor != nullptr)
 	{
+		// frame variable to allow for random selection of splatter texture decal from texture table
 		float frameNum = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
 
+		// Decal variable determines placement location and rotation values of splatter decal
 		auto Decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), baseMat, FVector(UKismetMathLibrary::RandomFloatInRange(20.f, 40.f)), Hit.Location, Hit.Normal.Rotation(), 0.f);
+		
+		// Creates dynamic material instance of splatter decal and places it at location value from decal variable. This is location value is then set equal to MatInstance variable
 		auto MatInstance = Decal->CreateDynamicMaterialInstance();
 
+		// Sets parameter values for Splat_MAT material blueprint based on C++ variable values randColor and frameNum
 		MatInstance->SetVectorParameterValue("Color", randColor);
 		MatInstance->SetScalarParameterValue("Frame", frameNum);
 	}

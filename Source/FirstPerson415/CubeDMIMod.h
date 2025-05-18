@@ -24,18 +24,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Establishment of box component for later use in dynamic material
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* boxComp;
 
+	// Establishment of static mesh component for later use in dynamic material
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* cubeMesh;
 
+	// Establishment of base material from which the dynamic material will be instanced from
 	UPROPERTY(EditAnywhere)
 		UMaterialInterface* baseMat;
 
 	UPROPERTY()
 		UMaterialInstanceDynamic* dmiMat;
 
+	// Overlap function for the implementation of dynamic material effects
 	UFUNCTION()
 		void OnOverLapBegin(class UPrimitiveComponent* OverLappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
