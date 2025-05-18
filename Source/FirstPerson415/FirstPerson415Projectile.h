@@ -22,15 +22,19 @@ class AFirstPerson415Projectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+	// Establishment of reference to "ballMesh" static mesh used within Blueprints
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* ballMesh;
-
+	
+	// Establishment of Umaterial "baseMat" to act as a base material
 	UPROPERTY(EditAnywhere)
 		UMaterial* baseMat;
 
+	// Esablishment of callable variable randColor
 	UPROPERTY()
 		FLinearColor randColor;
 
+	// Establishing projectile material projMat
 	UPROPERTY(EditAnywhere)
 		UMaterialInterface* projMat;
 
@@ -41,6 +45,7 @@ public:
 	AFirstPerson415Projectile();
 
 protected:
+	// Implemented BeginPlay function for further development in C++ class
 	virtual void BeginPlay();
 
 public:
