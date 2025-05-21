@@ -4,6 +4,8 @@
 #include "CubeDMIMod.h"
 #include "firstperson415Character.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 ACubeDMIMod::ACubeDMIMod()
@@ -66,14 +68,21 @@ void ACubeDMIMod::OnOverLapBegin(UPrimitiveComponent* OverLappedComp, AActor* Ot
 		float ranNumZ = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
 
 		// Determined random numerical float values are assigned as vector inputs for a 3 vector color parameter
-		FVector4 randColor = FVector4(ranNumX, ranNumY, ranNumZ, 1.f);
+		FLinearColor randColor = FLinearColor(ranNumX, ranNumY, ranNumZ, 1.f);
 		
 		// If dmiMat is valid, values for dmiMat parameters "Color," "Darkness," and "Opacity" are assigned values from previously determined randomized variable values
 		if (dmiMat) 
 		{
 			dmiMat->SetVectorParameterValue("Color", randColor);
 			dmiMat->SetScalarParameterValue("Darkness", ranNumX);
-			dmiMat->SetScalarParameterValue("Opacity", ranNumY);
+			//dmiMat->SetScalarParameterValue("Opacity", ranNumY);
+
+			if (colorP) 
+			{
+				UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, OtherComp, NAME_None, FVector(0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
+
+				particleComp->SetNiagaraVariableLinearColor(FString("RandColor"), randColor);
+			}
 		}
 	}
 }
