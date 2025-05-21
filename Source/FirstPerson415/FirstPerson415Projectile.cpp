@@ -6,6 +6,8 @@
 #include "Components/SphereComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 AFirstPerson415Projectile::AFirstPerson415Projectile()
 {
@@ -69,6 +71,14 @@ void AFirstPerson415Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 	// If projectile hits something (aka not nothing), projectile collision will apply splatter effect with randomized color to impacted surface
 	if (OtherActor != nullptr)
 	{
+		if (colorP) 
+		{
+			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
+			particleComp->SetNiagaraVariableLinearColor(FString("RandomColor*"), randColor);
+			ballMesh->DestroyComponent();
+			CollisionComp->BodyInstance.SetCollisionProfileName("NoCollision");
+		}
+
 		// frame variable to allow for random selection of splatter texture decal from texture table
 		float frameNum = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
 
