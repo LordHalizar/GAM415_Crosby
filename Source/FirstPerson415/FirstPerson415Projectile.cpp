@@ -71,10 +71,16 @@ void AFirstPerson415Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 	// If projectile hits something (aka not nothing), projectile collision will apply splatter effect with randomized color to impacted surface
 	if (OtherActor != nullptr)
 	{
+		// Checks for if colorP parameter is valid and then implements code block
 		if (colorP) 
 		{
+			// Creates new Niagara systems component and names it particleComp
 			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
+			
+			// particleComp used to change the BP_FirstPersonProjectile attached Niagara system Blueprint parameter called RandomColor
 			particleComp->SetNiagaraVariableLinearColor(FString("RandomColor"), randColor);
+
+			// On impact, ballMesh for BP_FirstPersonProjectile is destroyed and collision mode is set to NoCollision
 			ballMesh->DestroyComponent();
 			CollisionComp->BodyInstance.SetCollisionProfileName("NoCollision");
 		}

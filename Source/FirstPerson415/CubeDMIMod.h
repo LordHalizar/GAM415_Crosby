@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "CubeDMIMod.generated.h"
 
+// Forward Declaration of Niagara system
 class UNiagaraSystem;
 
 UCLASS()
