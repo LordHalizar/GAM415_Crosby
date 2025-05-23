@@ -6,8 +6,10 @@
 #include "GameFramework/Actor.h"
 #include "FirstPerson415Projectile.generated.h"
 
+// Forward declarations
 class USphereComponent;
 class UProjectileMovementComponent;
+// Forward Declaration of Niagara system
 class UNiagaraSystem;
 
 UCLASS(config=Game)
@@ -42,6 +44,7 @@ class AFirstPerson415Projectile : public AActor
 	UPROPERTY()
 		UMaterialInstanceDynamic* dmiMat;
 
+	// UPROPERTY for referencing the Niagara system through code
 	UPROPERTY(EditAnywhere)
 		UNiagaraSystem* colorP;
 

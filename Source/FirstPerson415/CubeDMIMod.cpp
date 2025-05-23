@@ -77,10 +77,13 @@ void ACubeDMIMod::OnOverLapBegin(UPrimitiveComponent* OverLappedComp, AActor* Ot
 			dmiMat->SetScalarParameterValue("Darkness", ranNumX);
 			//dmiMat->SetScalarParameterValue("Opacity", ranNumY);
 
+			// Checks if colorP parameter is valid before executing code block
 			if (colorP) 
 			{
+				// Creates new Niagara systems component and names it particleComp
 				UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, OtherComp, NAME_None, FVector(0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
 
+				// particleComp used to change the DMI_MAT attached Niagara system Blueprint parameter called RandomColor
 				particleComp->SetNiagaraVariableLinearColor(FString("RandColor"), randColor);
 			}
 		}
