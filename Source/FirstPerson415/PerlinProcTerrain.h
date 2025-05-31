@@ -18,6 +18,7 @@ public:
 	// Sets default values for this actor's properties
 	APerlinProcTerrain();
 
+	/* Initialization of property values used as parameters in the procedural creation of mesh sections*/
 	UPROPERTY(EditAnywhere, Meta = (ClampMin = 0))
 		int XSize = 0;
 
@@ -59,7 +60,10 @@ public:
 
 private:
 
+	/* Initialization of Procedural mesh component ProcMesh*/
 	UProceduralMeshComponent* ProcMesh;
+
+	/* Vector array variables used in implementation of CreateMeshSection function from ProceduralMeshComponent library*/
 	TArray<FVector> Vertices;
 	TArray<int> Triangles;
 	TArray<FVector2D> UV0;
