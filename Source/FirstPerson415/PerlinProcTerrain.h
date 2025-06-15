@@ -19,16 +19,16 @@ public:
 	APerlinProcTerrain();
 
 	/* Initialization of property values used as parameters in the procedural creation of mesh sections*/
-	UPROPERTY(EditAnywhere, Meta = (ClampMin = 0))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ClampMin = 0))
 		int XSize = 0;
 
-	UPROPERTY(EditAnywhere, Meta = (ClampMin = 0))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ClampMin = 0))
 		int YSize = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ClampMin = 0))
 		float ZMultiplier = 1.0f;
 
-	UPROPERTY(EditAnywhere, Meta = (ClampMin = 0))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ClampMin = 0))
 		float NoiseScale = 1.0f;
 
 	UPROPERTY(EditAnywhere, Meta = (ClampMin = 0.000001))
@@ -40,7 +40,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		float radius;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector Depth;
 
 protected:

@@ -67,7 +67,7 @@ void APerlinProcTerrain::CreateVertices()
 			float Z = FMath::PerlinNoise2D(FVector2D(X * NoiseScale + 0.1, Y * NoiseScale + 0.1)) * ZMultiplier;
 			
 			/* Prints out generated Z value*/
-			GEngine->AddOnScreenDebugMessage(-1, 999.0f, FColor::Yellow, FString::Printf(TEXT("Z %f"), Z));
+			//GEngine->AddOnScreenDebugMessage(-1, 999.0f, FColor::Yellow, FString::Printf(TEXT("Z %f"), Z));
 			
 			/* Vertices generated based on determined scale values from previous line statements*/
 			Vertices.Add(FVector(X * Scale, Y * Scale, Z));
