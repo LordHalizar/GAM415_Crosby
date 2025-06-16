@@ -91,19 +91,22 @@ void APortal::SetBool(AFirstPerson415Character* playerChar)
 
 void APortal::UpdatePortals()
 {
-	/* Gets the vector difference between player character location and the location of OtherPortal*/
-	FVector Location = this->GetActorLocation() - OtherPortal->GetActorLocation();
+	if (OtherPortal != nullptr) 
+	{
+		/* Gets the vector difference between player character location and the location of OtherPortal*/
+		FVector Location = this->GetActorLocation() - OtherPortal->GetActorLocation();
 
-	/* Gets player camera location in order to proceduraly update portal view to orient to players vision direction*/
-	FVector camLocation = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)->GetTransformComponent()->GetComponentLocation();
+		/* Gets player camera location in order to proceduraly update portal view to orient to players vision direction*/
+		FVector camLocation = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)->GetTransformComponent()->GetComponentLocation();
 
-	/* Gets player camera rotation in order to proceduraly update angle of portal view based on player camera view rotation*/
-	FRotator camRotation = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)->GetTransformComponent()->GetComponentRotation();
+		/* Gets player camera rotation in order to proceduraly update angle of portal view based on player camera view rotation*/
+		FRotator camRotation = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)->GetTransformComponent()->GetComponentRotation();
 
-	/* Calculates the combined location*/
-	FVector CombinedLocation = camLocation + Location;
+		/* Calculates the combined location*/
+		FVector CombinedLocation = camLocation + Location;
 
-	/* Sets the world location and rotation of scene capture component*/
-	sceneCapture->SetWorldLocationAndRotation(CombinedLocation, camRotation);
+		/* Sets the world location and rotation of scene capture component*/
+		sceneCapture->SetWorldLocationAndRotation(CombinedLocation, camRotation);
+	}
 }
 
