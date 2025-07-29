@@ -47,16 +47,16 @@ void AFirstPerson415Projectile::BeginPlay()
 {
 	Super::BeginPlay();
 	// Determines color parameter variables using randomized numbers generated within a range and then sets them equal to randColor variable
-	randColor = FLinearColor(UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), 1.f);
+	//randColor = FLinearColor(UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), 1.f);
 
 	// Creates dynamic material instance using projMat and stores value in dmiMat variable
-	dmiMat = UMaterialInstanceDynamic::Create(projMat, this);
+	//dmiMat = UMaterialInstanceDynamic::Create(projMat, this);
 
 	// Sets ballMesh material to created dynamic material instance stored in dmiMat
-	ballMesh->SetMaterial(0, dmiMat);
+	//ballMesh->SetMaterial(0, dmiMat);
 
 	// Sets vector parameter value for projectile color from dmiMat using the randColor variable and applying this to ProjColor material blueprint parameter
-	dmiMat->SetVectorParameterValue("ProjColor", randColor);
+	//dmiMat->SetVectorParameterValue("ProjColor", randColor);
 }
 
 void AFirstPerson415Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -69,7 +69,7 @@ void AFirstPerson415Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 		Destroy();
 	}
 
-	// If projectile hits something (aka not nothing), projectile collision will apply splatter effect with randomized color to impacted surface
+	/*// If projectile hits something (aka not nothing), projectile collision will apply splatter effect with randomized color to impacted surface
 	if (OtherActor != nullptr)
 	{
 		// Checks for if colorP parameter is valid and then implements code block
@@ -105,5 +105,5 @@ void AFirstPerson415Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Othe
 		{
 			procTerrain->AlterMesh(Hit.ImpactPoint);
 		}
-	}
+	}*/
 }
